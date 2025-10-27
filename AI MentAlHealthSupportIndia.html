@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Companion - AI Mental Health Support India</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: gradientShift 20s ease infinite;
+            background-size: 400% 400%;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 950px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 30px;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 92vh;
+            max-height: 800px;
+            animation: containerEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            backdrop-filter: blur(20px);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes containerEntry {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 28px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            animation: headerPulse 5s ease-in-out infinite;
+        }
+
+        @keyframes headerPulse {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.6; }
+            50% { transform: scale(1.2) rotate(180deg); opacity: 0.9; }
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+            animation: titleBounce 1.2s ease-out;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        @keyframes titleBounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background: linear-gradient(to right, #f3e5f5, #e1f5fe, #f3e5f5);
+            border-bottom: 3px solid #ce93d8;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: #4a4a4a;
+            font-weight: 600;
+            animation: statusPop 0.8s ease-out backwards;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .status-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .status-item:nth-child(1) { animation-delay: 0.2s; }
+        .status-item:nth-child(2) { animation-delay: 0.4s; }
+        .status-item:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes statusPop {
+            from {
+                opacity: 0;
+                transform: scale(0.5) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .status-icon {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4caf50, #81c784);
+            animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.6);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(76, 175, 80, 0.6); }
+            50% { transform: scale(1.2); box-shadow: 0 0 25px rgba(76, 175, 80, 0.9); }
+        }
+
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 25px;
+            background: linear-gradient(to bottom, #fafafa, #ffffff);
+        }
+
+        .chat-area::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .chat-area::-webkit-scrollbar-track {
+            background: linear-gradient(to bottom, #f3e5f5, #e1f5fe);
+            border-radius: 10px;
+        }
+
+        .chat-area::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+            border: 2px solid white;
+        }
+
+        .chat-area::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2, #f093fb);
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 25px;
+            animation: messageSlide 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateX(-40px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+            animation: messageSlideRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes messageSlideRight {
+            from {
+                opacity: 0;
+                transform: translateX(40px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        .message-content {
+            max-width: 75%;
+            padding: 18px 24px;
+            border-radius: 22px;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+
+        .message-content:hover {
+            transform: scale(1.03) translateY(-2px);
+        }
+
+        .message.bot .message-content {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            color: #333;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.25);
+            border: 2px solid #e3f2fd;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 5px 20px rgba(118, 75, 162, 0.4);
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 15px;
+            animation: avatarBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .avatar:hover {
+            transform: scale(1.15) rotate(10deg);
+        }
+
+        @keyframes avatarBounce {
+            0% { transform: scale(0); rotate: -180deg); }
+            80% { transform: scale(1.1) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .bot .avatar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .user .avatar {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            box-shadow: 0 5px 20px rgba(240, 147, 251, 0.5);
+        }
+
+        .quick-actions {
+            padding: 20px 25px;
+            background: linear-gradient(to right, #ffffff, #f8f9fa, #ffffff);
+            border-top: 3px solid #e3f2fd;
+            overflow-x: auto;
+            white-space: nowrap;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .quick-actions::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .quick-actions::-webkit-scrollbar-thumb {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+        }
+
+        .action-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin-right: 15px;
+            background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+            color: #5e35b1;
+            border: 3px solid #b39ddb;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: buttonWave 0.6s ease-out backwards;
+            box-shadow: 0 4px 15px rgba(94, 53, 177, 0.2);
+        }
+
+        .action-btn:nth-child(1) { animation-delay: 0.1s; }
+        .action-btn:nth-child(2) { animation-delay: 0.2s; }
+        .action-btn:nth-child(3) { animation-delay: 0.3s; }
+        .action-btn:nth-child(4) { animation-delay: 0.4s; }
+        .action-btn:nth-child(5) { animation-delay: 0.5s; }
+        .action-btn:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes buttonWave {
+            from {
+                opacity: 0;
+                transform: scale(0.7) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .action-btn:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.6);
+            border-color: #667eea;
+        }
+
+        .action-btn:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .input-area {
+            padding: 25px;
+            background: linear-gradient(to top, #ffffff, #f8f9fa);
+            border-top: 3px solid #e3f2fd;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 18px 26px;
+            border: 3px solid #b39ddb;
+            border-radius: 35px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: linear-gradient(135deg, #fafafa, #ffffff);
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .input-field:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 30px rgba(102, 126, 234, 0.4), inset 0 2px 10px rgba(0,0,0,0.05);
+            background: white;
+            transform: scale(1.02);
+        }
+
+        .send-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .send-btn:hover {
+            transform: scale(1.2) rotate(20deg);
+            box-shadow: 0 10px 35px rgba(102, 126, 234, 0.7);
+            background: linear-gradient(135deg, #764ba2, #f093fb);
+        }
+
+        .send-btn:active {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .mood-tracker {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            margin: 15px 0;
+            background: linear-gradient(135deg, #e3f2fd, #f3e5f5, #fff9c4);
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .mood-btn {
+            font-size: 45px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            padding: 10px;
+            filter: grayscale(30%) brightness(0.9);
+            position: relative;
+            animation: moodFloat 3s ease-in-out infinite;
+        }
+
+        .mood-btn:nth-child(1) { animation-delay: 0s; }
+        .mood-btn:nth-child(2) { animation-delay: 0.2s; }
+        .mood-btn:nth-child(3) { animation-delay: 0.4s; }
+        .mood-btn:nth-child(4) { animation-delay: 0.6s; }
+        .mood-btn:nth-child(5) { animation-delay: 0.8s; }
+
+        @keyframes moodFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .mood-btn:hover {
+            transform: scale(1.5) rotate(15deg);
+            filter: grayscale(0%) brightness(1.2) drop-shadow(0 8px 15px rgba(0,0,0,0.3));
+        }
+
+        .mood-btn:active {
+            transform: scale(1.3) rotate(5deg);
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #e1bee7, #ce93d8);
+            padding: 22px;
+            border-radius: 20px;
+            margin: 15px 0;
+            border-left: 6px solid #ab47bc;
+            animation: cardExpand 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 25px rgba(171, 71, 188, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 12px 35px rgba(171, 71, 188, 0.6);
+        }
+
+        @keyframes cardExpand {
+            from {
+                opacity: 0;
+                transform: scaleY(0.3) translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: scaleY(1) translateX(0);
+            }
+        }
+
+        .feature-card h4 {
+            color: #6a1b9a;
+            margin-bottom: 12px;
+            font-size: 20px;
+        }
+
+        .assessment-card {
+            background: linear-gradient(135deg, #fff9c4, #fff59d);
+            padding: 22px;
+            border-radius: 20px;
+            margin: 15px 0;
+            border-left: 6px solid #fdd835;
+            animation: cardExpand 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 25px rgba(253, 216, 53, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .assessment-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 12px 35px rgba(253, 216, 53, 0.6);
+        }
+
+        .assessment-card h4 {
+            color: #f57f17;
+            margin-bottom: 12px;
+            font-size: 20px;
+        }
+
+        .assessment-btn {
+            background: linear-gradient(135deg, #fdd835, #ffeb3b);
+            color: #f57f17;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 800;
+            margin: 8px 8px 8px 0;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 5px 15px rgba(253, 216, 53, 0.5);
+            display: inline-block;
+        }
+
+        .assessment-btn:hover {
+            background: linear-gradient(135deg, #ffeb3b, #fdd835);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(253, 216, 53, 0.7);
+        }
+
+        .crisis-alert {
+            background: linear-gradient(135deg, #ffcdd2, #ef9a9a);
+            padding: 22px;
+            border-radius: 20px;
+            margin: 15px 0;
+            border-left: 6px solid #e53935;
+            animation: alertShake 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 25px rgba(229, 57, 53, 0.5);
+        }
+
+        @keyframes alertShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .crisis-alert h4 {
+            color: #b71c1c;
+            margin-bottom: 12px;
+            font-size: 20px;
+        }
+
+        .emergency-btn {
+            background: linear-gradient(135deg, #e53935, #c62828);
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 800;
+            margin: 8px 8px 8px 0;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 6px 20px rgba(229, 57, 53, 0.5);
+            display: inline-block;
+        }
+
+        .emergency-btn:hover {
+            background: linear-gradient(135deg, #c62828, #b71c1c);
+            transform: scale(1.1);
+            box-shadow: 0 10px 35px rgba(229, 57, 53, 0.8);
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            gap: 8px;
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            animation: typingBounce 1.4s infinite;
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.5);
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-15px); }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            animation: progressShimmer 2s infinite;
+            background-size: 200% 100%;
+        }
+
+        @keyframes progressShimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .mood-btn {
+                font-size: 38px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🧠 Companion India</h1>
+            <p>आपका AI मानसिक स्वास्थ्य साथी | Your AI Mental Health Support Partner</p>
+        </div>
+
+        <div class="status-bar" id="statusBar">
+            <div class="status-item">
+                <div class="status-icon"></div>
+                <span>🔒 Secure</span>
+            </div>
+            <div class="status-item">
+                <div class="status-icon"></div>
+                <span>⏰ 24/7</span>
+            </div>
+            <div class="status-item">
+                <div class="status-icon"></div>
+                <span>🤫 Private</span>
+            </div>
+        </div>
+
+        <div class="chat-area" id="chatArea">
+            <div class="message bot">
+                <div class="avatar" title="Companion AI">🤖</div>
+                <div class="message-content">
+                    <p><strong>Namaste! 🙏</strong></p>
+                    <p style="margin-top:10px;">I'm <strong>Companion</strong>, your personal mental health support friend. I'm here to listen without judgment and help you feel better.</p>
+                    <p style="margin-top:10px;">💙 This is a safe space where you can share anything on your mind.</p>
+                    <p style="margin-top:15px;"><strong>How are you feeling today? Select your mood:</strong></p>
+                    <div class="mood-tracker" id="initialMoodTracker">
+                        <span class="mood-btn" onclick="selectMood('great')" title="Feeling Great!">😄</span>
+                        <span class="mood-btn" onclick="selectMood('good')" title="Feeling Good">🙂</span>
+                        <span class="mood-btn" onclick="selectMood('okay')" title="Feeling Okay">😐</span>
+                        <span class="mood-btn" onclick="selectMood('sad')" title="Feeling Sad">😔</span>
+                        <span class="mood-btn" onclick="selectMood('anxious')" title="Feeling Anxious">😰</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <button class="action-btn" onclick="quickAction('breathing')" title="Breathing exercises">🫁 श्वास Breathing</button>
+            <button class="action-btn" onclick="quickAction('grounding')" title="Grounding techniques">🌿 Grounding</button>
+            <button class="action-btn" onclick="quickAction('meditation')" title="Meditation guide">🧘 ध्यान Meditation</button>
+            <button class="action-btn" onclick="quickAction('assessment')" title="Mental health screening">📊 Assessment</button>
+            <button class="action-btn" onclick="quickAction('journal')" title="Journal prompts">📝 Journal</button>
+            <button class="action-btn" onclick="quickAction('crisis')" title="Emergency resources">🚨 संकट Help</button>
+        </div>
+
+        <div class="input-area">
+            <input type="text" class="input-field" id="userInput" placeholder="अपने विचार साझा करें | Share your thoughts..." onkeypress="handleKeyPress(event)">
+            <button class="send-btn" onclick="sendMessage()" title="Send message">➤</button>
+        </div>
+    </div>
+
+    <script>
+        // Example JS to make each message editable on click
+document.querySelectorAll('.message-content').forEach(mc => {
+  mc.setAttribute('contenteditable', 'true');
+  mc.addEventListener('blur', function() {
+    // Save edited text / update UI as needed
+  });
+});
+
+        const chatArea = document.getElementById('chatArea');
+        const userInput = document.getElementById('userInput');
+        const statusBar = document.getElementById('statusBar');
+        
+        let conversationContext = {
+            mood: null,
+            previousTopics: [],
+            userName: null,
+            conversationCount: 0,
+            assessmentInProgress: false,
+            currentAssessment: null,
+            assessmentScore: 0,
+            assessmentAnswers: []
+        };
+
+        const nlpPatterns = {
+            greetings: {
+                patterns: ['hi', 'hello', 'hey', 'namaste', 'namaskar', 'good morning', 'good evening', 'hola', 'sup', 'howdy'],
+                responses: [
+                    "Namaste! 🙏 I'm so glad you're here. How can I support you today?",
+                    "Hello! Welcome back. I'm here to listen. What's on your mind?",
+                    "Hey there! 😊 It's great to hear from you. How are you feeling right now?"
+                ]
+            },
+            anxiety: {
+                patterns: ['anxious', 'anxiety', 'worried', 'nervous', 'panic', 'scared', 'fear', 'tense', 'restless', 'overwhelmed', 'paranoid'],
+                responses: [
+                    "I understand anxiety can feel overwhelming. You're not alone in this. 💙 Let's try a quick grounding technique together - can you name 5 things you see around you right now?",
+                    "Anxiety is tough, but you're taking a brave step by talking about it. Would you like to try a breathing exercise? It can help calm your nervous system. 🫁",
+                    "I hear you. Anxiety can make everything feel intense. Remember, feelings are temporary. ⏳ What's triggering this anxiety right now? Sometimes naming it helps."
+                ]
+            },
+            depression: {
+                patterns: ['depressed', 'depression', 'sad', 'hopeless', 'worthless', 'empty', 'numb', 'unmotivated', 'no energy', 'cant get up', 'dont care', 'whats the point'],
+                responses: [
+                    "I hear you, and your feelings are completely valid. Depression can make everything feel heavy. 💙 You're brave for reaching out. Would you like to talk about what's weighing on you?",
+                    "Thank you for trusting me with this. Depression is real and difficult. Small steps matter ✨ - have you been able to do any self-care today, even something tiny?",
+                    "Your struggle is real, and you deserve support. Depression can make us feel isolated, but you're not alone. 🫂 What would help you feel even a little bit better right now?"
+                ]
+            },
+            stress: {
+                patterns: ['stressed', 'stress', 'pressure', 'burden', 'overworked', 'exhausted', 'burned out', 'too much', 'cant handle'],
+                responses: [
+                    "Stress can really pile up. 😓 Let's work through this together. What's the main thing causing you stress right now? Sometimes breaking it down helps.",
+                    "I understand you're under a lot of pressure. Your wellbeing matters. 💆 Have you been able to take any breaks today? Even 5 minutes can help reset.",
+                    "Stress affects us all, especially in today's fast-paced world. ⚡ Let's explore some coping strategies. What usually helps you feel calmer?"
+                ]
+            },
+            sleep: {
+                patterns: ['cant sleep', 'insomnia', 'sleep', 'tired', 'exhausted', 'fatigue', 'cant rest', 'no sleep', 'sleepless'],
+                responses: [
+                    "Sleep issues can really impact everything. 😴 Have you noticed any patterns - like what time you go to bed, screen time, or racing thoughts? Let's explore some sleep hygiene tips.",
+                    "Not getting enough rest is so difficult. Your body needs quality sleep. 🌙 Would you like to try a relaxation exercise before bed? I can guide you through one.",
+                    "Sleep problems are common but treatable. 💤 Have you tried creating a calming bedtime routine? Things like limiting screens, gentle stretching, or listening to calm music can help."
+                ]
+            },
+            loneliness: {
+                patterns: ['lonely', 'alone', 'isolated', 'no friends', 'nobody cares', 'disconnected', 'no one understands'],
+                responses: [
+                    "Feeling lonely is one of the hardest emotions. 💔 I want you to know I'm here with you, and you matter. Would you like to talk about what's making you feel this way?",
+                    "Loneliness can be so painful. You're not alone in feeling this way - it's more common than you think. 🤗 Have you been able to reach out to anyone, or would you like ideas on connecting with others?",
+                    "I hear you, and your feelings are valid. Sometimes we can feel lonely even around others. 🫂 What kind of connection are you craving? Let's explore ways to fulfill that need."
+                ]
+            },
+            relationships: {
+                patterns: ['relationship', 'partner', 'boyfriend', 'girlfriend', 'husband', 'wife', 'breakup', 'fight', 'argument', 'cheating', 'divorce'],
+                responses: [
+                    "Relationship challenges can be really tough. 💔 Want to tell me more about what's happening? Sometimes talking through it helps clarify things.",
+                    "I hear you. Relationships require work and understanding from both sides. 💕 How are you feeling about the situation? Your feelings matter.",
+                    "Relationship stress is one of the biggest sources of emotional pain. 💞 Remember, healthy relationships involve respect and communication. How can I support you with this?"
+                ]
+            },
+            family: {
+                patterns: ['family', 'parents', 'mom', 'dad', 'mother', 'father', 'brother', 'sister', 'family problems', 'relatives'],
+                responses: [
+                    "Family dynamics can be complex. 👨‍👩‍👧‍👦 Indian families especially have unique pressures. What's been happening? I'm here to listen without judgment.",
+                    "Family issues can be deeply painful because we're so connected to them. 💔 Remember, it's okay to set boundaries and prioritize your mental health. Want to talk about it?",
+                    "I understand family relationships can be challenging. 🏠 You deserve to be heard and respected. What's the main issue you're facing with your family?"
+                ]
+            },
+            work: {
+                patterns: ['work', 'job', 'office', 'boss', 'colleague', 'career', 'workload', 'deadline', 'fired', 'promotion'],
+                responses: [
+                    "Work stress is so common, especially in today's demanding environment. 💼 What's the biggest challenge at work right now? Let's see how we can manage it.",
+                    "Your career is important, but so is your wellbeing. ⚖️ Have you been able to maintain work-life balance? Sometimes we need to set boundaries.",
+                    "I hear you. Workplace stress can really affect our mental health. 📊 Remember, your worth isn't defined by your productivity. How can I help you with this?"
+                ]
+            },
+            gratitude: {
+                patterns: ['thank you', 'thanks', 'grateful', 'appreciate', 'helped me', 'feeling better', 'youre great'],
+                responses: [
+                    "You're so welcome! 💕 I'm honored to support you. Remember, I'm always here whenever you need to talk. Take care of yourself!",
+                    "It makes me happy that I could help! Your wellbeing matters. 🌟 Feel free to come back anytime - day or night.",
+                    "Thank you for trusting me! You're taking important steps for your mental health. I'm proud of you! 💪"
+                ]
+            },
+            positive: {
+                patterns: ['happy', 'great', 'good', 'wonderful', 'amazing', 'excited', 'joy', 'better', 'fantastic', 'awesome'],
+                responses: [
+                    "That's wonderful to hear! 😊 I'm so happy for you! What's bringing you joy today? Let's celebrate these positive moments!",
+                    "Yes! I love hearing this! 🎉 Positive emotions are so important. What contributed to you feeling this way? Let's remember this!",
+                    "That makes me so happy! 🌟 You deserve to feel good. These moments matter - hold onto this feeling!"
+                ]
+            },
+            help: {
+                patterns: ['help', 'support', 'what can you do', 'how do you work', 'assist', 'guide me'],
+                responses: [
+                    "I'm here to support you in many ways! 🤝 I can: listen to your concerns, provide coping techniques, guide you through assessments, offer crisis resources, and be your judgment-free companion. What do you need right now?",
+                    "I'm your mental health buddy! 💙 I can help with anxiety, depression, stress management, sleep issues, relationship concerns, and more. I also provide breathing exercises, grounding techniques, and crisis support. What's on your mind?",
+                    "Think of me as your supportive friend who's always available. 🌈 I listen, provide evidence-based coping strategies, and help you navigate difficult emotions. I'm here 24/7. How can I support you today?"
+                ]
+            }
+        };
+
+        const crisisKeywords = ['suicide', 'kill myself', 'end it all', 'want to die', 'hurt myself', 'self harm', 'no point living', 'better off dead', 'end my life', 'cant go on'];
+
+        const assessments = {
+            phq9: {
+                name: "PHQ-9 Depression Screening",
+                questions: [
+                    "Little interest or pleasure in doing things?",
+                    "Feeling down, depressed, or hopeless?",
+                    "Trouble falling or staying asleep, or sleeping too much?",
+                    "Feeling tired or having little energy?",
+                    "Poor appetite or overeating?",
+                    "Feeling bad about yourself or that you are a failure?",
+                    "Trouble concentrating on things?",
+                    "Moving or speaking slowly or being fidgety/restless?",
+                    "Thoughts that you would be better off dead or hurting yourself?"
+                ],
+                scoring: {
+                    0: "Not at all",
+                    1: "Several days",
+                    2: "More than half the days",
+                    3: "Nearly every day"
+                }
+            },
+            gad7: {
+                name: "GAD-7 Anxiety Assessment",
+                questions: [
+                    "Feeling nervous, anxious, or on edge?",
+                    "Not being able to stop or control worrying?",
+                    "Worrying too much about different things?",
+                    "Trouble relaxing?",
+                    "Being so restless that it's hard to sit still?",
+                    "Becoming easily annoyed or irritable?",
+                    "Feeling afraid as if something awful might happen?"
+                ],
+                scoring: {
+                    0: "Not at all",
+                    1: "Several days",
+                    2: "More than half the days",
+                    3: "Nearly every day"
+                }
+            }
+        };
+
+        function analyzeMessage(text) {
+            const lowerText = text.toLowerCase().trim();
+            
+            if (crisisKeywords.some(keyword => lowerText.includes(keyword))) {
+                return { type: 'crisis', response: getCrisisResponse() };
+            }
+            
+            for (let category in nlpPatterns) {
+                const patterns = nlpPatterns[category].patterns;
+                const responses = nlpPatterns[category].responses;
+                
+                for (let pattern of patterns) {
+                    if (lowerText.includes(pattern)) {
+                        conversationContext.previousTopics.push(category);
+                        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                        return { type: category, response: randomResponse };
+                    }
+                }
+            }
+            
+            const defaultResponses = [
+                "I'm listening. 👂 Tell me more about how you're feeling.",
+                "That sounds like a lot to deal with. 💭 Can you share more details?",
+                "I hear you. Your feelings are valid. ✨ What else is on your mind?",
+                "Thank you for opening up. 🙏 How long have you been feeling this way?",
+                "I'm here for you. 💙 What would help you feel better right now?",
+                "That must be difficult. 🫂 Would you like to explore some coping strategies?"
+            ];
+            
+            conversationContext.conversationCount++;
+            return { type: 'default', response: defaultResponses[Math.floor(Math.random() * defaultResponses.length)] };
+        }
+
+        function getCrisisResponse() {
+            return `<div class="crisis-alert">
+                <h4>🚨 Immediate Support Available</h4>
+                <p><strong>I'm very concerned about what you're sharing. Your life has value, and help is available RIGHT NOW:</strong></p>
+                <div style="margin: 15px 0; line-height: 2;">
+                    <p><strong>🇮🇳 AASRA (24/7):</strong><br>📞 +91-9820466726</p>
+                    <p><strong>🇮🇳 Vandrevala Foundation (24/7):</strong><br>📞 1860-2662-345 / 1800-2333-330</p>
+                    <p><strong>🇮🇳 iCall (Mon-Sat, 8am-10pm):</strong><br>📞 +91-9152987821</p>
+                    <p><strong>🇮🇳 COOJ Mental Health (24/7):</strong><br>📞 +91-833-554-8888</p>
+                    <p><strong>🚨 Emergency:</strong> 108 / 112</p>
+                </div>
+                <button class="emergency-btn" onclick="window.open('tel:+919820466726')">📞 Call AASRA Now</button>
+                <button class="emergency-btn" onclick="alert('Emergency Helplines:\\n\\nAASRA: +91-9820466726\\nVandrevala: 1860-2662-345\\niCall: +91-9152987821\\nCOOJ: +91-833-554-8888\\nEmergency: 108/112')" style="margin-left:10px;">📋 View All Numbers</button>
+                <p style="margin-top:15px; font-size:12px;"><strong>I'm here with you, but trained crisis counselors can provide the immediate, life-saving support you need. Please reach out to them right now. You matter. 💙</strong></p>
+            </div>`;
+        }
+
+        function addMessage(text, isUser, isHtml = false) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar';
+            avatar.textContent = isUser ? '👤' : '🤖';
+            avatar.title = isUser ? 'You' : 'Companion AI';
+            
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            
+            if (isHtml) {
+                content.innerHTML = text;
+            } else {
+                content.textContent = text;
+            }
+            
+            if (isUser) {
+                msgDiv.appendChild(content);
+                msgDiv.appendChild(avatar);
+            } else {
+                msgDiv.appendChild(avatar);
+                msgDiv.appendChild(content);
+            }
+            
+            chatArea.appendChild(msgDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot typing-indicator';
+            typingDiv.id = 'typing';
+            typingDiv.innerHTML = `
+                <div class="avatar">🤖</div>
+                <div class="message-content" style="padding: 25px; background: linear-gradient(135deg, #ffffff, #f8f9fa);">
+                    <span></span><span></span><span></span>
+                </div>
+            `;
+            chatArea.appendChild(typingDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const typing = document.getElementById('typing');
+            if (typing) typing.remove();
+        }
+
+        function sendMessage() {
+            const text = userInput.value.trim();
+            if (!text) return;
+            
+            if (conversationContext.assessmentInProgress) {
+                handleAssessmentAnswer(text);
+                return;
+            }
+            
+            addMessage(text, true);
+            userInput.value = '';
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                removeTypingIndicator();
+                const analysis = analyzeMessage(text);
+                addMessage(analysis.response, false, true);
+            }, 1500);
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+
+        function selectMood(mood) {
+            conversationContext.mood = mood;
+            
+            const initialTracker = document.getElementById('initialMoodTracker');
+            if (initialTracker) {
+                initialTracker.style.transition = 'all 0.4s ease';
+                initialTracker.style.opacity = '0';
+                initialTracker.style.transform = 'scale(0.8)';
+                setTimeout(() => initialTracker.remove(), 400);
+            }
+            
+            const moodData = {
+                great: {
+                    emoji: '😄',
+                    color: 'linear-gradient(135deg, #4caf50, #81c784)',
+                    text: "That's wonderful to hear! 😊✨ What's contributing to your positive mood today? I'd love to hear what's making you feel great!",
+                    card: `<div class="feature-card" style="margin-top:15px;">
+                        <h4>🌟 Keep the Positive Momentum!</h4>
+                        <p>Since you're feeling great, here are ways to maintain this state:</p>
+                        <ul style="margin: 15px 0 15px 20px; line-height: 1.8;">
+                            <li>✍️ Practice gratitude - write down 3 things you're grateful for</li>
+                            <li>💬 Share your joy with someone you care about</li>
+                            <li>🎨 Do something creative or fun today</li>
+                            <li>🏃 Get some exercise to boost those endorphins even more!</li>
+                        </ul>
+                        <button class="assessment-btn" onclick="quickAction('journal')">📝 Start Gratitude Journal</button>
+                    </div>`
+                },
+                good: {
+                    emoji: '🙂',
+                    color: 'linear-gradient(135deg, #66bb6a, #a5d6a7)',
+                    text: "I'm glad you're feeling good! 🌟 What's been going well for you? Let's celebrate the positive things!",
+                    card: `<div class="feature-card" style="margin-top:15px;">
+                        <h4>✨ Maintain Your Good Mood</h4>
+                        <p>You're in a positive space! Here's how to stay there:</p>
+                        <ul style="margin: 15px 0 15px 20px; line-height: 1.8;">
+                            <li>💭 Reflect on what's working well in your life</li>
+                            <li>👥 Connect with friends or family</li>
+                            <li>🎯 Try a new hobby or activity</li>
+                            <li>💆 Take time for self-care activities you enjoy</li>
+                        </ul>
+                    </div>`
+                },
+                okay: {
+                    emoji: '😐',
+                    color: 'linear-gradient(135deg, #ffa726, #ffb74d)',
+                    text: "Thanks for sharing. 😌 Feeling 'okay' is valid too. Is there anything specific on your mind today? I'm here to listen.",
+                    card: `<div class="feature-card" style="margin-top:15px;">
+                        <h4>🌿 Tips for When You're Feeling Just Okay</h4>
+                        <p>Sometimes we're not great, not terrible - just okay. That's normal!</p>
+                        <ul style="margin: 15px 0 15px 20px; line-height: 1.8;">
+                            <li>🤔 Check in with yourself: What do you need right now?</li>
+                            <li>🚶 Try a gentle activity like a short walk</li>
+                            <li>💙 Practice self-compassion - it's okay to not be 100%</li>
+                            <li>✨ Consider what small thing could improve your day</li>
+                        </ul>
+                        <button class="assessment-btn" onclick="quickAction('breathing')">🫁 Try Breathing Exercise</button>
+                    </div>`
+                },
+                sad: {
+                    emoji: '😔',
+                    color: 'linear-gradient(135deg, #42a5f5, #64b5f6)',
+                    text: "I'm here for you. 💙 I can see you're feeling sad, and that's completely okay. Would you like to talk about what's making you feel this way? Sometimes sharing helps lighten the load.",
+                    card: `<div class="assessment-card" style="margin-top:15px;">
+                        <h4>💙 Support for When You're Feeling Sad</h4>
+                        <p>Sadness is a natural emotion. You don't have to face it alone:</p>
+                        <ul style="margin: 15px 0 15px 20px; line-height: 1.8;">
+                            <li>😢 Allow yourself to feel - emotions need to be acknowledged</li>
+                            <li>🤗 Reach out to someone you trust</li>
+                            <li>🛁 Do something gentle and self-soothing</li>
+                            <li>⏳ Remember: This feeling is temporary</li>
+                        </ul>
+                        <p style="margin-top:15px;"><strong>Would you like to:</strong></p>
+                        <button class="assessment-btn" onclick="quickAction('journal')">📝 Write in a Journal</button>
+                        <button class="assessment-btn" onclick="quickAction('grounding')">🌿 Try Grounding Exercise</button>
+                        <p style="margin-top:15px; font-size:13px;">💡 If sadness persists for weeks, consider taking a depression screening.</p>
+                        <button class="assessment-btn" onclick="startAssessment('phq9')">📊 Take PHQ-9 Screening</button>
+                    </div>`
+                },
+                anxious: {
+                    emoji: '😰',
+                    color: 'linear-gradient(135deg, #ef5350, #e57373)',
+                    text: "I can see you're feeling anxious. 🫂 Anxiety can be really overwhelming. Let's work through this together. What's triggering your anxiety right now? We can try some calming techniques.",
+                    card: `<div class="assessment-card" style="margin-top:15px;">
+                        <h4>🫂 Immediate Anxiety Relief Strategies</h4>
+                        <p>Your anxiety is valid, and there are ways to calm it:</p>
+                        <ul style="margin: 15px 0 15px 20px; line-height: 1.8;">
+                            <li>🫁 Focus on your breath - slow, deep breathing</li>
+                            <li>🌍 Ground yourself in the present moment</li>
+                            <li>💭 Name what you're feeling: "I'm feeling anxious because..."</li>
+                            <li>🧐 Challenge anxious thoughts: Are they facts or fears?</li>
+                        </ul>
+                        <p style="margin-top:15px;"><strong>Quick Relief Tools:</strong></p>
+                        <button class="assessment-btn" onclick="quickAction('breathing')">🫁 4-7-8 Breathing</button>
+                        <button class="assessment-btn" onclick="quickAction('grounding')">🌿 5-4-3-2-1 Grounding</button>
+                        <p style="margin-top:15px; font-size:13px;">💡 For ongoing anxiety, consider taking an anxiety assessment.</p>
+                        <button class="assessment-btn" onclick="startAssessment('gad7')">📊 Take GAD-7 Screening</button>
+                    </div>`
+                }
+            };
+            
+            const selected = moodData[mood];
+            addMessage(`I'm feeling ${mood} ${selected.emoji}`, true);
+            updateMoodStatus(mood, selected.color, selected.emoji);
+            
+            showTypingIndicator();
+            setTimeout(() => {
+                removeTypingIndicator();
+                addMessage(selected.text, false);
+                setTimeout(() => {
+                    addMessage(selected.card, false, true);
+                }, 1000);
+            }, 1200);
+        }
+
+        function updateMoodStatus(mood, color, emoji) {
+            let moodIndicator = document.getElementById('mood-status');
+            
+            if (!moodIndicator) {
+                moodIndicator = document.createElement('div');
+                moodIndicator.id = 'mood-status';
+                moodIndicator.className = 'status-item';
+                statusBar.appendChild(moodIndicator);
+            }
+            
+            const moodLabels = { great: 'Great', good: 'Good', okay: 'Okay', sad: 'Sad', anxious: 'Anxious' };
+            
+            moodIndicator.innerHTML = `
+                <div class="status-icon" style="background: ${color};"></div>
+                <span>${emoji} ${moodLabels[mood]}</span>
+            `;
+            
+            moodIndicator.style.animation = 'statusPop 0.8s ease-out';
+        }
+
+        function quickAction(action) {
+            const actions = {
+                breathing: {
+                    msg: "Let's do a breathing exercise 🫁",
+                    response: `<div class="feature-card">
+                        <h4>🫁 4-7-8 Breathing Technique</h4>
+                        <p><strong>This technique activates your body's relaxation response:</strong></p>
+                        <ol style="margin: 15px 0; padding-left: 25px; line-height: 2;">
+                            <li><strong>Breathe in</strong> through your nose for <strong>4 seconds</strong> 👃</li>
+                            <li><strong>Hold</strong> your breath for <strong>7 seconds</strong> ⏸️</li>
+                            <li><strong>Exhale slowly</strong> through your mouth for <strong>8 seconds</strong> 😮‍💨</li>
+                            <li><strong>Repeat</strong> 3-4 times</li>
+                        </ol>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%;"></div>
+                        </div>
+                        <p style="margin-top:15px;">💡 <em>Tip: Place one hand on your chest and one on your belly. Focus on breathing deeply into your belly.</em></p>
+                        <p style="margin-top:10px;">Take your time. I'll be right here when you finish. 🧘‍♀️</p>
+                        <button class="assessment-btn" onclick="startBreathingTimer()">▶️ Start Guided Session</button>
+                    </div>`
+                },
+                grounding: {
+                    msg: "I'd like to try grounding 🌿",
+                    response: `<div class="feature-card">
+                        <h4>🌿 5-4-3-2-1 Grounding Exercise</h4>
+                        <p><strong>This helps bring you back to the present moment and reduces anxiety:</strong></p>
+                        <div style="margin: 15px 0; line-height: 2.2;">
+                            <p>👁️ <strong>5 things</strong> you can <strong>SEE</strong> (colors, objects, patterns)</p>
+                            <p>✋ <strong>4 things</strong> you can <strong>TOUCH</strong> (textures, temperatures)</p>
+                            <p>👂 <strong>3 things</strong> you can <strong>HEAR</strong> (near and far sounds)</p>
+                            <p>👃 <strong>2 things</strong> you can <strong>SMELL</strong> (or pleasant smells you like)</p>
+                            <p>👅 <strong>1 thing</strong> you can <strong>TASTE</strong> (or your favorite taste)</p>
+                        </div>
+                        <p style="margin-top:10px;">💡 <em>Take your time with each sense. This exercise grounds you in reality and away from anxious thoughts.</em></p>
+                    </div>`
+                },
+                meditation: {
+                    msg: "I want to try meditation 🧘",
+                    response: `<div class="feature-card">
+                        <h4>🧘 Simple Mindfulness Meditation</h4>
+                        <p><strong>5-Minute Guided Practice:</strong></p>
+                        <ol style="margin: 15px 0; padding-left: 25px; line-height: 2;">
+                            <li><strong>Find a comfortable position</strong> - sitting or lying down 🪑</li>
+                            <li><strong>Close your eyes</strong> or soften your gaze 👁️</li>
+                            <li><strong>Bring attention to your breath</strong> - notice it naturally flowing 🫁</li>
+                            <li><strong>When thoughts arise</strong> (and they will!), gently return to your breath 💭</li>
+                            <li><strong>No judgment</strong> - there's no "wrong" way to meditate ✨</li>
+                        </ol>
+                        <p style="margin-top:10px;">💡 <em>Even 5 minutes daily can reduce stress and improve focus. Be patient with yourself!</em></p>
+                        <p style="margin-top:10px;">🎵 Try pairing this with calm music or nature sounds for enhanced relaxation.</p>
+                    </div>`
+                },
+                assessment: {
+                    msg: "I'd like to take a mental health assessment 📊",
+                    response: `<div class="assessment-card">
+                        <h4>📊 Mental Health Assessment Tools</h4>
+                        <p><strong>Choose a validated screening tool:</strong></p>
+                        <div style="margin: 15px 0; line-height: 2;">
+                            <p><strong>• PHQ-9 (Depression):</strong> 9-question screening for depression symptoms</p>
+                            <p><strong>• GAD-7 (Anxiety):</strong> 7-question assessment for generalized anxiety</p>
+                        </div>
+                        <button class="assessment-btn" onclick="startAssessment('phq9')">📋 Start PHQ-9 Depression Screening</button>
+                        <button class="assessment-btn" onclick="startAssessment('gad7')">📋 Start GAD-7 Anxiety Assessment</button>
+                        <p style="margin-top:15px; font-size:12px;"><strong>⚠️ Important:</strong> These are screening tools, not diagnoses. Please share results with a healthcare provider for proper evaluation.</p>
+                    </div>`
+                },
+                journal: {
+                    msg: "Can you give me a journal prompt? 📝",
+                    response: `<div class="feature-card">
+                        <h4>📝 Daily Journal Prompts</h4>
+                        <p><strong>Choose a prompt that resonates with you today:</strong></p>
+                        <div style="margin: 15px 0; line-height: 2.2;">
+                            <p><strong>🌟 Gratitude:</strong> What are three things that brought you comfort or joy today, no matter how small?</p>
+                            <p><strong>💭 Reflection:</strong> What emotion have you been feeling most today, and what might be causing it?</p>
+                            <p><strong>💪 Growth:</strong> What challenge did you face today, and what did you learn from it?</p>
+                            <p><strong>🎯 Goals:</strong> What's one small thing you can do tomorrow to take care of yourself?</p>
+                            <p><strong>❤️ Self-compassion:</strong> If your best friend was feeling like you are right now, what would you tell them?</p>
+                        </div>
+                        <p style="margin-top:10px;">💡 <em>Take 5-10 minutes to write freely. No judgment, no rules - just honest reflection.</em></p>
+                    </div>`
+                },
+                crisis: {
+                    msg: "I need crisis resources 🚨",
+                    response: getCrisisResponse()
+                }
+            };
+            
+            const selected = actions[action];
+            addMessage(selected.msg, true);
+            
+            showTypingIndicator();
+            setTimeout(() => {
+                removeTypingIndicator();
+                addMessage(selected.response, false, true);
+            }, 1200);
+        }
+
+        function startAssessment(type) {
+            conversationContext.assessmentInProgress = true;
+            conversationContext.currentAssessment = type;
+            conversationContext.assessmentScore = 0;
+            conversationContext.assessmentAnswers = [];
+            
+            const assessment = assessments[type];
+            const intro = `<div class="assessment-card">
+                <h4>📊 ${assessment.name}</h4>
+                <p><strong>Over the last 2 weeks, how often have you been bothered by:</strong></p>
+                <p style="margin-top:15px; font-size:14px;">
+                    For each question, please indicate how often you've experienced these symptoms.
+                </p>
+                <p style="margin-top:10px;"><strong>Scoring:</strong></p>
+                <div style="margin: 10px 0; line-height: 1.8;">
+                    <p>0️⃣ Not at all</p>
+                    <p>1️⃣ Several days</p>
+                    <p>2️⃣ More than half the days</p>
+                    <p>3️⃣ Nearly every day</p>
+                </div>
+                <button class="assessment-btn" onclick="startAssessmentQuestions()">📋 Begin Assessment</button>
+            </div>`
+        }
+        
+        function startAssessmentQuestions() {
+            const assessment = assessments[conversationContext.currentAssessment];
+            const currentQ = conversationContext.assessmentAnswers.length;
+            
+            if (currentQ >= assessment.questions.length) {
+                finishAssessment();
+                return;
+            }
+            
+            const questionCard = `<div class="assessment-card">
+                <h4>Question ${currentQ + 1}/${assessment.questions.length}</h4>
+                <p style="margin: 15px 0;"><strong>${assessment.questions[currentQ]}</strong></p>
+                <div style="margin-top:15px;">
+                    <button class="assessment-btn" onclick="recordAnswer(0)">0️⃣ Not at all</button>
+                    <button class="assessment-btn" onclick="recordAnswer(1)">1️⃣ Several days</button>
+                    <button class="assessment-btn" onclick="recordAnswer(2)">2️⃣ More than half</button>
+                    <button class="assessment-btn" onclick="recordAnswer(3)">3️⃣ Nearly every day</button>
+                </div>
+                <div class="progress-bar" style="margin-top:20px;">
+                    <div class="progress-fill" style="width: ${(currentQ / assessment.questions.length) * 100}%;"></div>
+                </div>
+            </div>`;
+            
+            addMessage(questionCard, false, true);
+        }
+        
+        function recordAnswer(score) {
+            conversationContext.assessmentAnswers.push(score);
+            conversationContext.assessmentScore += score;
+            startAssessmentQuestions();
+        }
+        
+        function finishAssessment() {
+            const type = conversationContext.currentAssessment;
+            const score = conversationContext.assessmentScore;
+            
+            let severity, recommendations;
+            
+            if (type === 'phq9') {
+                if (score <= 4) severity = "Minimal depression";
+                else if (score <= 9) severity = "Mild depression";
+                else if (score <= 14) severity = "Moderate depression";
+                else if (score <= 19) severity = "Moderately severe depression";
+                else severity = "Severe depression";
+                
+                recommendations = `<ul style="margin: 15px 0 15px 20px; line-height: 1.8;">
+                    ${score > 9 ? '<li>🏥 Consider consulting a mental health professional</li>' : ''}
+                    <li>📝 Keep tracking your mood daily</li>
+                    <li>🌟 Try behavioral activation activities</li>
+                    <li>🧘‍♀️ Practice self-care and stress management</li>
+                </ul>`;
+            } else if (type === 'gad7') {
+                if (score <= 4) severity = "Minimal anxiety";
+                else if (score <= 9) severity = "Mild anxiety";
+                else if (score <= 14) severity = "Moderate anxiety";
+                else severity = "Severe anxiety";
+                
+                recommendations = `<ul style="margin: 15px 0 15px 20px; line-height: 1.8;">
+                    ${score > 9 ? '<li>🏥 Consider consulting a mental health professional</li>' : ''}
+                    <li>🫁 Practice breathing exercises regularly</li>
+                    <li>🌿 Use grounding techniques when anxious</li>
+                    <li>💭 Challenge anxious thoughts</li>
+                </ul>`;
+            }
+            
+            const resultCard = `<div class="assessment-card">
+                <h4>📊 Assessment Results</h4>
+                <p style="margin-top:15px;"><strong>Score: ${score}</strong></p>
+                <p style="margin-top:10px;"><strong>Indicates: ${severity}</strong></p>
+                <div style="margin-top:15px;">
+                    <p><strong>Recommendations:</strong></p>
+                    ${recommendations}
+                </div>
+                <p style="margin-top:15px; font-size:12px;"><strong>⚠️ Note:</strong> This is a screening tool, not a diagnosis. Please share these results with a healthcare provider for proper evaluation.</p>
+                ${score > 9 ? '<button class="emergency-btn" onclick="quickAction(\'crisis\')">🏥 View Help Resources</button>' : ''}
+            </div>`;
+            
+            addMessage(resultCard, false, true);
+            
+            // Reset assessment context
+            conversationContext.assessmentInProgress = false;
+            conversationContext.currentAssessment = null;
+            conversationContext.assessmentScore = 0;
+            conversationContext.assessmentAnswers = [];
+        }
+
+        function startBreathingTimer() {
+            let seconds = 0;
+            const phases = [
+                { duration: 4, text: "Breathe in... 👃" },
+                { duration: 7, text: "Hold... ⏸️" },
+                { duration: 8, text: "Breathe out... 😮‍💨" }
+            ];
+            let currentPhase = 0;
+            let repetitions = 0;
+            const totalReps = 4;
+
+            const timerCard = document.createElement('div');
+            timerCard.className = 'feature-card';
+            timerCard.innerHTML = `
+                <h4>🫁 Guided Breathing</h4>
+                <p id="breathingInstruction" style="margin: 15px 0; font-size: 24px; text-align: center;"></p>
+                <div class="progress-bar">
+                    <div id="breathingProgress" class="progress-fill" style="width: 0%;"></div>
+                </div>
+                <p id="breathingCounter" style="margin-top: 15px; text-align: center;"></p>
+            `;
+            
+            addMessage(timerCard, false, true);
+            
+            const instruction = document.getElementById('breathingInstruction');
+            const progress = document.getElementById('breathingProgress');
+            const counter = document.getElementById('breathingCounter');
+            
+            const timer = setInterval(() => {
+                const phase = phases[currentPhase];
+                const phaseProgress = (seconds / phase.duration) * 100;
+                
+                instruction.textContent = phase.text;
+                progress.style.width = `${phaseProgress}%`;
+                counter.textContent = `Round ${repetitions + 1} of ${totalReps}`;
+                
+                seconds++;
+                
+                if (seconds > phase.duration) {
+                    seconds = 0;
+                    currentPhase = (currentPhase + 1) % phases.length;
+                    
+                    if (currentPhase === 0) {
+                        repetitions++;
+                        if (repetitions >= totalReps) {
+                            clearInterval(timer);
+                            addMessage("Great job! How do you feel now? Remember, you can repeat this exercise anytime you feel anxious. 💙", false);
+                        }
+                    }
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
